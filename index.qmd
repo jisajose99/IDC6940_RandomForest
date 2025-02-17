@@ -18,7 +18,11 @@ editor:
     wrap: 72
 ---
 
-[Report](#report) | [Literature Review](LitReview.html){target="_blank"}  | [Slides](slides.html){target="_blank"} 
+
+[Report](index.html) |  [Literature Review](LitReview.html) | [Slides](slides.html)
+
+
+
 
 Slides: [slides.html](slides.html){target="_blank"} ( Go to `slides.qmd`
 to edit)
