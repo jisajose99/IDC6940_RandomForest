@@ -102,7 +102,9 @@ $$
 
 ## Analysis and Results
 
+
 ### Data Exploration and Visualization
+
 
 Data Set: [Heart Failure Prediction
 Data](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction/data)
@@ -114,43 +116,59 @@ electrocardiogram results, max heart rate, exercise-induced angina, old
 peak, and slope of peak exercise ST segment. The data set is used to
 predict whether the patient has heart disease or not.
 
--   Describe your data sources and collection process.
-
--   Present initial findings and insights through visualizations.
-
--   Highlight unexpected patterns or anomalies.
-
-A study was conducted to determine how...
-
 ```{r, warning=FALSE, echo=T, message=FALSE}
 # loading packages 
 library(tidyverse)
-library(knitr)
-library(ggthemes)
-library(ggrepel)
-library(dslabs)
 ```
 
 ```{r, warning=FALSE, echo=TRUE}
 # Load Data
-kable(head(murders))
+data <- read.csv("heart.csv")
 
-ggplot1 = murders %>% ggplot(mapping = aes(x=population/10^6, y=total)) 
+head(data)
 
-  ggplot1 + geom_point(aes(col=region), size = 4) +
-  geom_text_repel(aes(label=abb)) +
-  scale_x_log10() +
-  scale_y_log10() +
-  geom_smooth(formula = "y~x", method=lm,se = F)+
-  xlab("Populations in millions (log10 scale)") + 
-  ylab("Total number of murders (log10 scale)") +
-  ggtitle("US Gun Murders in 2010") +
-  scale_color_discrete(name = "Region")+
-      theme_bw()
-  
+#structure of the dataset
+str(data)
+
+# Summary statistics of the dataset
+summary(data)
+
+
+# Check for missing values
+colSums(is.na(data))
 
 ```
 
+```{r, warning=FALSE, echo=T, message=FALSE}
+# The distribution of 'Age' with a histogram
+ggplot(data, aes(x = Age)) +
+  geom_histogram(bins = 30, fill = "blue", color = "black") +
+  theme_minimal() +
+  labs(title = "Age Distribution", x = "Age", y = "Count")
+
+# The distribution of 'Heart Disease' with a histogram
+ggplot(data, aes(x = HeartDisease)) +
+  geom_bar(fill = "blue", color = "black") +
+  theme_minimal() +
+  labs(title = "Heart Disease Class Distribution", x = "Heart Disease", y = "Count")
+
+
+```
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+
+
+```
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+
+
+```
+
+```{r, warning=FALSE, echo=T, message=FALSE}
+
+
+```
 ### Modeling and Results
 
 -   Explain your data preprocessing and cleaning steps.
