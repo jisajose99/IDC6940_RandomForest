@@ -1,0 +1,13 @@
+#distribution of age could be important because if most people in the data set is  between 30-40year the  model could be try to  learn from  similar ages-
+
+#The distribution of  heat disease could be  important if the model could be biased predict as if it is the majority. Adjust things if needed to  treat both groups fairly
+
+
+
+#Notes on Age : Age
+#Min.: The minimum age is 28.
+#1st Qu. (First Quartile): 25% of the people are 47 years old or younger.
+#Median: 50% of the people are 54 years old or younger.
+#Mean: The average age is 53.51 years.
+#3rd Qu. (Third Quartile): 75% of the people are 60 years old or younger.
+#Max.: The maximum age is 77
