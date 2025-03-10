@@ -75,31 +75,43 @@ while identifying areas for further refinement.
 
 ## Methods
 
-
-The random forest algorithm generates numerous decision trees using randomization and then aggregates the output of these trees into one output. A voting method is used for classification and an averaging method for regression. Randomization is done in two steps. The first uses bootstrap aggregation or bagging at the data set level, creating new randomized samples for the model development and testing. The next level of randomization happens at the decision node level. A certain number of predictors are chosen, which is often the square root of the number of predictors in the data set. The algorithm tests all possible thresholds for all selected variables and chooses the variable-threshold combination which results in the best split – the split which most effectively separates cases from controls, for instance [@rigatti2017random]. This random selection of variables and threshold testing continues until either “pure” nodes are reached (containing only cases or controls) or some pre-defined endpoint [@rigatti2017random]. 
+The random forest algorithm generates numerous decision trees using randomization and then aggregates the output of these trees into one output. A decision tree is an algorithm that has a ‘tree-like’ structure, consisting of a root node, branches, internal nodes and leaf nodes. The root node branches out into internal nodes, and depending on the outcome of each internal node, it ultimately leads to the leaf node; or the final outcome, or decision. In the formation of a random forest, a voting method is used for classification and an averaging method for regression. Randomization is done in two steps. The first uses bootstrap aggregation or bagging at the data set level, creating new randomized samples for the model development and testing. Bagging consists of randomly sampling from the original data set with replacement, ensuring the sample set is completely random. The data that is not used in the sampled data set is considered the out-of-bag (OOB) data. The next level of randomization happens at the decision node level. A certain number of predictors are chosen, which is often the square root of the number of predictors in the data set. The algorithm tests all possible thresholds for all selected variables and chooses the variable-threshold combination which results in the best split – the split which most effectively separates cases from controls, for instance [@rigatti2017random]. This random selection of variables and threshold testing continues until either “pure” nodes are reached (containing only cases or controls) or some pre-defined endpoint [@rigatti2017random]. 
 
 ![Figure 1. [@probst2019rfhealth]](RF.png)
 
 ![Figure 2. [@probst2019hyperparameters]](RF2.png)
 
-*The common non-parametric regression model is*
-$Y_i = m(X_i) + \varepsilon_i$*, where* $Y_i$ *can be defined as the sum
-of the regression function value* $m(x)$ *for* $X_i$*. Here* $m(x)$ *is
-unknown and* $\varepsilon_i$ *some errors. With the help of this
-definition, we can create the estimation for local averaging i.e.*
-$m(x)$ *can be estimated with the product of* $Y_i$ *average and* $X_i$
-*is near to* $x$*. In other words, this means that we are discovering
-the line through the data points with the help of surrounding data
-points. The estimation formula is printed below [@R-base]:*
+Figure 2 provides an overview of the hyperparameters available to tune the decision forest, along with the recommended or default values. The decision forest algorithm is designed to work well without much tuning. It’s been found that an increased number of trees provides a better output, but there’s typically a limit in which there’s no more gain in accuracy, and only a decrease or slow down in performance with too many trees. The hyperparameter ‘mtry’ has been found to have the most influence, where the best value of ‘mtry’ depends on the number of variables that are related to the outcome [@probst2019hyperparameters].
+
+The random forest algorithm uses the Gini measure of impurity to select the split with the lowest impurity at every node [@khalilia2011predicting]. The gini impurity can range between 0 - 0.5, with the lower the impurity, the better the split. If a gini impurity is 0, this means it is a ‘pure’ node and does not need to be split further. The formula for Gini Impurity is below, where p is the probability of samples belonging to the class i at a specific node.
 
 $$
-M_n(x) = \sum_{i=1}^{n} W_n (X_i) Y_i  \tag{1}
-$$$W_n(x)$ *is the sum of weights that belongs to all real numbers.
-Weights are positive numbers and small if* $X_i$ *is far from* $x$*.*
+Gini = 1 -\sum_{i = 1}^{n}{(p_i)^2}
+$$
 
--   Detail the models or algorithms used.
 
--   Justify your choices based on the problem and data.
+
+***Random Forest Implementation in the Dataset***
+
+The random forest model will be applied to analyze the dataset containing multiple clinical and demographic factors. This dataset has features like Age, Sex, Type of Chest Pain, Resting Blood Pressure (RestingBP), Cholesterol level, Fasting Blood Sugar (FastingBS), Electrocardiogram Results when at Rest (RestingECG), Maximum Heart Rate attained (MaxHR), Angina induced by exercise, Oldpeak, and ST Slope. The model will be fitted to the data so the presence or lack of heart disease (HeartDisease) can be predicted. This variable is the target (0 - No Heart Disease, 1 - Heart Disease).
+
+***Model Training***  
+In order to train the model, a dataset will first be created by splitting it into an 80% training and 20% testing set for evaluation. The random forest will have an ensemble of 100 decision trees (n_estimators = 100) and the mtry value for each split will be the square root of the total number of features [@oshiro2012many]. The Gini impurity metric will be utilized and will ensure that the most informative features are selected ([@khalilia2011predicting]. Other parameter control methodologies such as grid or randomized search will be used to optimize the number of trees, maximum depth, and minimum sample split (Probst, Wright, & Boulesteix, 2019b).
+
+***Model Evaluation and Performance Metrics***
+
+For the model evaluation, the following metrics will be applied:
+
+- AUC-ROC Score: Evaluates the model's classification capability for distinguishing classes (Heart Disease vs. No Heart Disease) [@probst2019rfhealth].
+- F1-score
+- Precision
+
+***Advantages/Disadvantages***
+
+The random forests method remains one of the most robust and versatile methods for solving classification tasks, especially in the healthcare sector. Their capability to manage high dimensional data, model intricate relationships, and rank order features makes them particularly useful in disease prediction and risk factor evaluation [@breiman2001random]. All of these benefits come with caveats. While random forests are robust in overfitting and are efficient with missing values [@khalilia2011predicting], they also demand above-average computing power, can be inefficient with time on large databases, and are less clear than logistic regression models [@probst2019rfhealth]. Imposing certain values to parameters improves these shortcomings but not without a loss of performance and efficiency in specific datasets. Regardless, random forests are still a good choice in predictive modeling in medical research and decision support systems [@biau2016random].
+
+
+In summary the Random Forest algorithm has been used in this study because of its compatibility with structured clinical datasets and its ability to integrate categorical and numerical data without significant preprocessing [@breiman2001random]. In contrast to logistic regression, which applies a mode of linearity, Random Forest is able to capture complex non-linear relationships in healthcare data [@probst2019rfhealth]. Another advantage of Random Forest is its provision of feature importance indices, which enhances the model’s interpretability by medical practitioners concerning risk prediction and proactive measures’ implementation[@khalilia2011predicting]
 
 
 ## Analysis and Results
