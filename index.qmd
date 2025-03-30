@@ -384,17 +384,20 @@ These insights could assist with feature selection and simultaneously ensure tha
 ```
 ### Modeling and Results
 
--   Explain your data preprocessing and cleaning steps.
-
--   Present your key findings in a clear and concise manner.
-
--   Use visuals to support your claims.
-
--   **Tell a story about what the data reveals.**
+In this section, we will begin with performing any necessary cleaning
+and preprocessing of the data. We will then use the decision tree
+algorithm to demonstrate how a decision tree works, and show the
+performance of one tree. The next step will be using the random forest
+algorithm, which is a combination of decision trees, to see how it
+performs in comparison, ideally providing a more accurate prediction.
 
 ***Data Preprocessing and Cleaning***
 
-While there was no null or NA missing values found in the data set, we did find that there were some RestingBP and Cholesterol values of 0. There was one row with a RestingBP = 0 and 172 rows with Cholesterol = 0. We decided to drop these rows from the data set, as they were missing valid data.
+While there was no null or NA missing values found in the data set, we
+did find that there were some RestingBP and Cholesterol values of 0.
+There was one row with a RestingBP = 0 and 172 rows with Cholesterol =
+0. We decided to drop these rows from the data set, as they were missing
+valid data.
 
 ```{r}
 #| include: false
@@ -405,6 +408,7 @@ cho1
 cho2 <- sum(data$Cholesterol == '0' & data$HeartDisease == '0')
 cho2
 ```
+
 ```{r}
 #Remove the bad data
 newdata <- data[data$Cholesterol != 0, ]
@@ -412,9 +416,16 @@ newdata <- data[data$Cholesterol != 0, ]
 bp0 <- sum(newdata$RestingBP == '0') #results in 0
 cho <- sum(newdata$Cholesterol == '0') #results in 0
 ```
-Our next step is to encode the data. The random forest alogorithm, along with most machine learning algorithms, functions best with numerical values. Therefore, we will transform the categorical variables to numeric. We will use one-hot encoding to transform the categorical variables into a binary column that indicates the presense (1) or absence (0) of the category.
+
+Our next step is to encode the data. The random forest alogorithm, along
+with most machine learning algorithms, functions best with numerical
+values. Therefore, we will transform the categorical variables to
+numeric. We will use one-hot encoding to transform the categorical
+variables into a binary column that indicates the presense (1) or
+absence (0) of the category.
 
 ***Encoded Data Preview***
+
 ```{r}
 library(caret)
 dmy <- dummyVars(" ~ .", data = newdata)
@@ -423,7 +434,12 @@ encoded$HeartDisease <- as.factor(encoded$HeartDisease)
 kable(encoded[1:3, ])
 ```
 
-***Splitting the Data***(70% Train and 30% Test)
+***Splitting the Data*** (70% Train and 30% Test)
+
+We split the data set into training and test subsets. The training
+subset will contain 70% of the data, and the test subset will contain
+30% of the data.
+
 ```{r}
 #install.packages("caTools")
 library(caTools)
@@ -440,55 +456,267 @@ test = encoded[!ind,]
 ```
 
 ***Model Fitting and Prediction***
+
+**Decision Tree**
+
+We first demonstrate how a single decision tree would look for our data
+set. We achieved an accuracy of 81.7% without hyperparameter tuning. The
+decision tree can be followed to determine what the predicted end result
+would be. For example, if the patient has ST_SlopeUp = 1 and
+ChestPainTypeASY = 0; they likely do not have heart disease. If the
+patient has ST_SlopeUp = 0, MaxHR \< 151, SexF = 0, then the patient
+likely does have heart disease.
+
+```{r}
+library(rpart)
+library(rpart.plot)
+library(caret)
+tree <- rpart(HeartDisease ~ ., 
+                    data = train, 
+                    method = "class",
+                    control = rpart.control(minsplit = 10, cp = 0.01))
+
+rpart.plot(tree, box.palette = "auto", nn = TRUE)
+
+predictions <- predict(tree, test, type = "class")
+```
+(Figure 3: Visualization of a Single Decision Tree Used in Heart Disease Classification)
+
+**Random Forest**
+
+After gaining an understanding of how a single decision tree functions;
+we proceed with the bulk of our analysis using the random forest
+algorithm. We trained the random forest using 100 trees and graphed the decision tree and evaluation metrics below. The random forest achieved an accuracy of 88.4%, which is higher than the 81.7% obtained from the single decision tree, as expected. The confusion matrix shows that there were 104 true negatives (HeartDisease=0), 94 true positives (HeartDisease=1), 13 false negatives, and 13 false positives. Precision, recall, sensitivity, and F1 scores were all the same.
+
 ```{r}
 library(randomForest)
 rf <- randomForest(HeartDisease ~ .,  
                         data = train,  
                         n_tree=100)
-print(rf)
+#print(rf)
 
 prediction <- predict(rf, newdata = test)
+cm <- confusionMatrix(prediction, test$HeartDisease)
 
-accuracy <- sum(prediction==test$HeartDisease) / nrow(test)
-accuracy
+draw_confusion_matrix <- function(cm) {
+
+  layout(matrix(c(1,1,2)))
+  par(mar=c(2,2,2,2))
+  plot(c(100, 345), c(300, 450), type = "n", xlab="", ylab="", xaxt='n', yaxt='n')
+  title('CONFUSION MATRIX', cex.main=2)
+
+  # create the matrix 
+  rect(150, 430, 240, 370, col='#3F97D0')
+  text(195, 435, 'HeartDisease=0', cex=1.2)
+  rect(250, 430, 340, 370, col='#F7AD50')
+  text(295, 435, 'HeartDisease=1', cex=1.2)
+  text(125, 370, 'Predicted', cex=1.3, srt=90, font=2)
+  text(245, 450, 'Actual', cex=1.3, font=2)
+  rect(150, 305, 240, 365, col='#F7AD50')
+  rect(250, 305, 340, 365, col='#3F97D0')
+  text(140, 400, 'HeartDisease=0', cex=1.2, srt=90)
+  text(140, 335, 'HeartDisease=1', cex=1.2, srt=90)
+
+  # add in the cm results 
+  res <- as.numeric(cm$table)
+  text(195, 400, res[1], cex=1.6, font=2, col='white')
+  text(195, 335, res[2], cex=1.6, font=2, col='white')
+  text(295, 400, res[3], cex=1.6, font=2, col='white')
+  text(295, 335, res[4], cex=1.6, font=2, col='white')
+
+  # add in the specifics 
+  plot(c(100, 0), c(100, 0), type = "n", xlab="", ylab="", main = "DETAILS", xaxt='n', yaxt='n')
+  text(10, 85, names(cm$byClass[1]), cex=1.2, font=2)
+  text(10, 70, round(as.numeric(cm$byClass[1]), 3), cex=1.2)
+  text(30, 85, names(cm$byClass[2]), cex=1.2, font=2)
+  text(30, 70, round(as.numeric(cm$byClass[2]), 3), cex=1.2)
+  text(50, 85, names(cm$byClass[5]), cex=1.2, font=2)
+  text(50, 70, round(as.numeric(cm$byClass[5]), 3), cex=1.2)
+  text(70, 85, names(cm$byClass[6]), cex=1.2, font=2)
+  text(70, 70, round(as.numeric(cm$byClass[6]), 3), cex=1.2)
+  text(90, 85, names(cm$byClass[7]), cex=1.2, font=2)
+  text(90, 70, round(as.numeric(cm$byClass[7]), 3), cex=1.2)
+
+  # add in the accuracy information 
+  text(30, 35, names(cm$overall[1]), cex=1.5, font=2)
+  text(30, 20, round(as.numeric(cm$overall[1]), 3), cex=1.4)
+  text(70, 35, names(cm$overall[2]), cex=1.5, font=2)
+  text(70, 20, round(as.numeric(cm$overall[2]), 3), cex=1.4)
+}  
+
+draw_confusion_matrix(cm)
 ```
+(Figure 4: Confusion Matrix for Random Forest Model)
 
-***ROC Curve and AUC***
+
+***Hyperparameter Tuning***
+
+After achieving an accuracy of 88.4% on the initial random forest model built using default parameters, we used hyperparameter tuning to improve the model further. Tuning the model is a crucial step in machine learning because the default values will not be the most accurate or generalizable (Probst, Wright, & Boulesteix, 2019b). We conducted model enhancement by implementing 5-fold cross-validation in the process of tuning the key parameter mtry, which is the number of variables that are randomly chosen at every split of the tree. 
+
+For the cross-validation, the training data was divided into five sets, where the model was trained on four sets and validated on the remaining part. The cycle was executed for every fold, aggregated performance across folds, and used the Area Under the ROC Curve (AUC) to serve as the main optimization metric. The reason AUC was chosen is due to its accuracy in providing a reliable model discrimination threshold independent measure, especially in a binary classification problem where the class distributions tend to differ (Fawcett, 2006).
+
+We evaluated mtry parameters from 2 through 5. Based on analysis, we discovered that mtry=3 achieved the greatest mean AUC (0.9302) which suggested that this setting provided the optimal compromise between overfitting and underfitting (Oshiro et al., 2012).
+
 ```{r}
+# Load necessary libraries
+library(caret)
+library(randomForest)
 library(pROC)
-rf_roc <- roc(as.numeric(test$HeartDisease), as.numeric(prediction))
-plot(rf_roc, main = "ROC Curve", col = "blue")
-auc(rf_roc)
-```
 
-***Confusion Matrix***
-```{r}
+# Set seed for reproducibility
+set.seed(123)
 
-library(ggplot2)
-library(yardstick)
-results_df <- tibble(
-  truth = test$HeartDisease,
-  prediction = prediction
+# Make sure HeartDisease is a factor
+encoded$HeartDisease <- factor(ifelse(encoded$HeartDisease == 1, "Yes", "No"))
+
+# Split the data into training (70%) and testing (30%) sets
+split <- createDataPartition(encoded$HeartDisease, p = 0.7, list = FALSE)
+train <- encoded[split, ]
+test <- encoded[-split, ]
+
+# Set up cross-validation controls (5-fold CV)
+control <- trainControl(
+  method = "cv",
+  number = 5,
+  classProbs = TRUE,
+  summaryFunction = twoClassSummary,
+  verboseIter = FALSE  # Set to FALSE to hide fold details
 )
 
-conf_plot <- conf_mat(results_df, truth = truth, estimate = prediction)
-conf_data <- as.data.frame(conf_plot$table)
-names(conf_data) <- c("Prediction", "Truth", "Freq")
+# Define tuning grid for mtry (number of features tried at each split)
+tune_grid <- expand.grid(mtry = c(2, 3, 4, 5))
 
-ggplot(conf_data, aes(x = Truth, y = Prediction, fill = Freq)) +
-  geom_tile(color = "white") +
-  geom_text(aes(label = Freq), size = 5) +
-  scale_fill_gradient(low = "#deebf7", high = "#3182bd") +
-  labs(title = "Confusion Matrix", x = "Actual", y = "Predicted") +
-  theme_minimal()
+# Train Random Forest model with hyperparameter tuning
+rf_tuned <- train(
+  HeartDisease ~ .,
+  data = train,
+  method = "rf",
+  metric = "ROC",              # Optimize using AUC
+  trControl = control,
+  tuneGrid = tune_grid,
+  ntree = 100                  # Number of trees
+)
+
+# Print the best model and plot tuning results
+#print(rf_tuned)
+#plot(rf_tuned)
+
+# Make predictions on test set
+rf_preds <- predict(rf_tuned, newdata = test)
+rf_probs <- predict(rf_tuned, newdata = test, type = "prob")[, "Yes"]
+
 
 ```
-
-***Feature Importance Plot***
 
 ```{r}
-varImpPlot(rf, main = "Variable Importance")
+# Predict using the tuned random forest model
+predictions <- predict(rf_tuned, newdata = test)
+
+# Generate the confusion matrix
+cm <- confusionMatrix(predictions, test$HeartDisease)
+
+# Define the function to draw the confusion matrix
+draw_confusion_matrix <- function(cm) {
+  layout(matrix(c(1,1,2)))
+  par(mar = c(2,2,2,2))
+  plot(c(100, 345), c(300, 450), type = "n", xlab="", ylab="", xaxt='n', yaxt='n')
+  title('CONFUSION MATRIX', cex.main=2)
+
+  # Matrix layout
+  rect(150, 430, 240, 370, col = '#3F97D0')
+  text(195, 435, 'HeartDisease=No', cex = 1.2)
+  rect(250, 430, 340, 370, col = '#F7AD50')
+  text(295, 435, 'HeartDisease=Yes', cex = 1.2)
+  text(125, 370, 'Predicted', cex = 1.3, srt = 90, font = 2)
+  text(245, 450, 'Actual', cex = 1.3, font = 2)
+  rect(150, 305, 240, 365, col = '#F7AD50')
+  rect(250, 305, 340, 365, col = '#3F97D0')
+  text(140, 400, 'HeartDisease=No', cex = 1.2, srt = 90)
+  text(140, 335, 'HeartDisease=Yes', cex = 1.2, srt = 90)
+
+  # Confusion matrix values
+  res <- as.numeric(cm$table)
+  text(195, 400, res[1], cex = 1.6, font = 2, col = 'white')
+  text(195, 335, res[2], cex = 1.6, font = 2, col = 'white')
+  text(295, 400, res[3], cex = 1.6, font = 2, col = 'white')
+  text(295, 335, res[4], cex = 1.6, font = 2, col = 'white')
+
+  # Metrics display
+  plot(c(100, 0), c(100, 0), type = "n", xlab="", ylab="", main = "DETAILS", xaxt='n', yaxt='n')
+  text(10, 85, names(cm$byClass[1]), cex = 1.2, font = 2)
+  text(10, 70, round(as.numeric(cm$byClass[1]), 3), cex = 1.2)
+  text(30, 85, names(cm$byClass[2]), cex = 1.2, font = 2)
+  text(30, 70, round(as.numeric(cm$byClass[2]), 3), cex = 1.2)
+  text(50, 85, names(cm$byClass[5]), cex = 1.2, font = 2)
+  text(50, 70, round(as.numeric(cm$byClass[5]), 3), cex = 1.2)
+  text(70, 85, names(cm$byClass[6]), cex = 1.2, font = 2)
+  text(70, 70, round(as.numeric(cm$byClass[6]), 3), cex = 1.2)
+  text(90, 85, names(cm$byClass[7]), cex = 1.2, font = 2)
+  text(90, 70, round(as.numeric(cm$byClass[7]), 3), cex = 1.2)
+
+  # Overall accuracy and kappa
+  text(30, 35, names(cm$overall[1]), cex = 1.5, font = 2)
+  text(30, 20, round(as.numeric(cm$overall[1]), 3), cex = 1.4)
+  text(70, 35, names(cm$overall[2]), cex = 1.5, font = 2)
+  text(70, 20, round(as.numeric(cm$overall[2]), 3), cex = 1.4)
+}
+
+# Run the function to visualize
+draw_confusion_matrix(cm)
+
+
 ```
+(Figure 5: Confusion Matrix for Tuned Random Forest Model)
+
+The confusion matrix indicated for the test dataset that the last model most accurately classified for mtry = 3 and 100 trees. It’s performance on the dataset was as follows:<br/>  
+- Accuracy: 88.34% <br/> 
+- Sensitivity (Recall for ‘No’ class): 95.73% <br/> 
+- Specificity: 80.19%  <br/> 
+- Kappa: 0.76 (substantial agreement) <br/> 
+- AUC: 0.9371
+
+These numbers demonstrate that the tuned model not only does well on the training folds but can also be expected to perform well on unseen data. As shown in Figure 1, the ROC curve indicates strong separation between classes, emphasizing a steep rise towards the top left corner which implies high sensitivity and low false positive rate (Saito & Rehmsmeier, 2015).
+
+Figure 6 below The tuned random forest model’s ROC curve with an AUC score of 0.9371. This score suggests remarkable classification ability. 
+
+```{r}
+
+# ROC Curve and AUC
+roc_obj <- roc(response = test$HeartDisease, predictor = rf_probs, levels = c("No", "Yes"))
+auc_value <- auc(roc_obj)
+#cat("AUC:", auc_value, "\n")
+
+# Plot ROC Curve
+plot(roc_obj, main = paste("ROC Curve (AUC =", round(auc_value, 4), ")"))
+
+
+```
+(Figure 6: ROC curve with an AUC score of tuned RF Model)
+
+The ROC (Receiver Operating Characteristic) curve displays the balance of sensitivity (true positive rate) against specificity (false positive rate) for different thresholds. The provided AUC score of 0.9371 is indicative of the strong  power of the model in accurately classifying patients with heart disease from those without it. This shows how hyperparameter tuning can optimize accurately and reliably diagnosing heart disease (Fawcett, 2006).
+
+We also looked for feature importance, which showed ST_SlopeUp, ChestPainTypeASY, and ST_SlopeFlat to be some of the most important predictors. This is consistent with medical domain knowledge since changes in ST segments and chest pain types are known markers of cardiac abnormality (Khalilia, Chakraborty, & Popescu, 2011). The model’s ability to capture meaningful physiological patterns is also supported by the high ranking of MaxHR and Oldpeak.  
+
+
+```{r}
+
+set.seed(123)
+rf_model <- randomForest(HeartDisease ~ ., data = train, ntree = 100, importance = TRUE)
+
+# View raw importance values
+#importance(rf_model)
+
+# Plot the feature importance
+varImpPlot(rf_model,
+           type = 2,  # Type 2 = MeanDecreaseGini
+           main = "Feature Importance (Gini Index)",
+           col = "black")
+
+```
+(Figure 7. Feature importance based on the average decrease in Gini index.)
+
+In an ensemble model such as the random forest, a lack of tuning may still produce acceptable results, however, it will never be fully optimal. For instance, mtry was tuned such that the trees in the forest had the optimal levels of randomness along with the optimal depth of the splits so that the model could generalize to new data without overfitting (Boulestix et al., 2012). 
+
 ### Conclusion
 
 -   Summarize your key findings.
