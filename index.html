@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)">
-<meta name="dcterms.date" content="2025-03-30">
+<meta name="dcterms.date" content="2025-04-06">
 
 <title>Random Forest in the Health Industry</title>
 <style>
@@ -3263,7 +3263,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 30, 2025</p>
+      <p class="date">April 6, 2025</p>
     </div>
   </div>
   
@@ -3381,16 +3381,16 @@ Gini = 1 -\sum_{i = 1}^{n}{(p_i)^2}
 <p><strong><em>Model Evaluation and Performance Metrics</em></strong></p>
 <p>For the model evaluation, the following metrics will be applied:</p>
 <ul>
-<li><p>AUC-ROC Score: Evaluates the model’s classification capability for distinguishing classes (Heart Disease vs. No Heart Disease) <span class="citation" data-cites="probst2019rfhealth">(<a href="#ref-probst2019rfhealth" role="doc-biblioref">Probst, Wright, and Boulesteix 2019a</a>)</span>. The AUC ROC Score is the area under the curve of the ROC (receiver-operating characteristic curve) curve. The ROC curve graphs the true positive rate over the false positive rate. The higher the ROC AUC, the better. <span class="math display">\[
+<li><p><em>AUC-ROC Score</em>: Evaluates the model’s classification capability for distinguishing classes (Heart Disease vs. No Heart Disease) <span class="citation" data-cites="probst2019rfhealth">(<a href="#ref-probst2019rfhealth" role="doc-biblioref">Probst, Wright, and Boulesteix 2019a</a>)</span>. The AUC ROC Score is the area under the curve of the ROC (receiver-operating characteristic curve) curve. The ROC curve graphs the true positive rate over the false positive rate. The higher the ROC AUC, the better. <span class="math display">\[
 \text{AUC-ROC} = \int_{0}^{1} \text{TPR} \left( \text{FPR}^{-1}(x) \right) \, dx
-\]</span></p></li>
-<li><p>Precision: Precision is the ratio of the true positive predictions to the total number of positive predictions <span class="math display">\[
-Precision = \frac{True Positives}{(True Positives + False Positives)}
-\]</span></p></li>
-<li><p>Recall (Sensitivity): Recall is the ratio of the true positive predictions to all the actual positive instances: <span class="math display">\[\text{Recall} = \frac{TruePositives}{TruePositives + FalseNegatives}\]</span></p></li>
-<li><p>F1-score: F1 score is the average of precision and recall. <span class="math display">\[
-F1 = \frac{2*(Precision*Recall)}{(Precision + Recall)}
-\]</span></p></li>
+  \]</span></p></li>
+<li><p><em>Precision</em>: Precision is the ratio of the true positive predictions to the total number of positive predictions <span class="math display">\[
+  Precision = \frac{True Positives}{(True Positives + False Positives)}
+  \]</span></p></li>
+<li><p><em>Recall (Sensitivity)</em>: Recall is the ratio of the true positive predictions to all the actual positive instances: <span class="math display">\[\text{Recall} = \frac{TruePositives}{TruePositives + FalseNegatives}\]</span></p></li>
+<li><p><em>F1-score</em>: F1 score is the average of precision and recall. <span class="math display">\[
+  F1 = \frac{2*(Precision*Recall)}{(Precision + Recall)}
+  \]</span></p></li>
 </ul>
 <p><strong><em>Advantages/Disadvantages</em></strong></p>
 <p>The random forests method remains one of the most robust and versatile methods for solving classification tasks, especially in the healthcare sector. Their capability to manage high dimensional data, model intricate relationships, and rank order features makes them particularly useful in disease prediction and risk factor evaluation <span class="citation" data-cites="breiman2001random">(<a href="#ref-breiman2001random" role="doc-biblioref">Breiman 2001</a>)</span>. All of these benefits come with caveats. While random forests are robust in overfitting and are efficient with missing values <span class="citation" data-cites="khalilia2011predicting">(<a href="#ref-khalilia2011predicting" role="doc-biblioref">Khalilia, Chakraborty, and Popescu 2011</a>)</span>, they also demand above-average computing power, can be inefficient with time on large databases, and are less clear than logistic regression models <span class="citation" data-cites="probst2019rfhealth">(<a href="#ref-probst2019rfhealth" role="doc-biblioref">Probst, Wright, and Boulesteix 2019a</a>)</span>. Imposing certain values to parameters improves these shortcomings but not without a loss of performance and efficiency in specific datasets. Regardless, random forests are still a good choice in predictive modeling in medical research and decision support systems <span class="citation" data-cites="biau2016random">(<a href="#ref-biau2016random" role="doc-biblioref">Biau and Scornet 2016</a>)</span>.</p>
@@ -3404,18 +3404,18 @@ F1 = \frac{2*(Precision*Recall)}{(Precision + Recall)}
 <p>Data Set: <a href="https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction/data">Heart Failure Prediction Data</a></p>
 <p>This data set is a compilation of five different data sets from around the world. It contains 11 features: age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting electrocardiogram results, max heart rate, exercise-induced angina, old peak, and slope of peak exercise ST segment. The data set is used to predict whether the patient has heart disease or not.</p>
 <ul>
-<li><strong>Age</strong>: Age of the patient (years)</li>
-<li><strong>Sex</strong>: Sex of the patient (M: Male, F: Female)</li>
-<li><strong>ChestPainType</strong>: Chest pain type (TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic)</li>
-<li><strong>RestingBP</strong>: Resting blood pressure (mm Hg)</li>
-<li><strong>Cholesterol</strong>: Serum cholesterol (mg/dL)</li>
-<li><strong>FastingBS</strong>: Fasting blood sugar (1: if FastingBS &gt; 120 mg/dL, 0: otherwise)</li>
-<li><strong>RestingECG</strong>: Resting electrocardiogram results (Normal, ST: having ST-T wave abnormality, LVH: showing probable or definite left ventricular hypertrophy by Estes’ criteria)</li>
-<li><strong>MaxHR</strong>: Maximum heart rate achieved (Numeric value between 60 and 202)</li>
-<li><strong>ExerciseAngina</strong>: Exercise-induced angina (Y: Yes, N: No)</li>
-<li><strong>Oldpeak</strong>: Oldpeak = ST (Numeric value measured in depression)</li>
-<li><strong>ST_Slope</strong>: The slope of the peak exercise ST segment (Up: upsloping, Flat: flat, Down: downsloping)</li>
-<li><strong>HeartDisease</strong>: Output class (1: heart disease, 0: Normal)</li>
+<li><em>Age</em>: Age of the patient (years)</li>
+<li><em>Sex</em>: Sex of the patient (M: Male, F: Female)</li>
+<li><em>ChestPainType</em>: Chest pain type (TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic)</li>
+<li><em>RestingBP</em>: Resting blood pressure (mm Hg)</li>
+<li><em>Cholesterol</em>: Serum cholesterol (mg/dL)</li>
+<li><em>FastingBS</em>: Fasting blood sugar (1: if FastingBS &gt; 120 mg/dL, 0: otherwise)</li>
+<li><em>RestingECG</em>: Resting electrocardiogram results (Normal, ST: having ST-T wave abnormality, LVH: showing probable or definite left ventricular hypertrophy by Estes’ criteria)</li>
+<li><em>MaxHR</em>: Maximum heart rate achieved (Numeric value between 60 and 202)</li>
+<li><em>ExerciseAngina</em>: Exercise-induced angina (Y: Yes, N: No)</li>
+<li><em>Oldpeak</em>: Oldpeak = ST (Numeric value measured in depression)</li>
+<li><em>ST_Slope</em>: The slope of the peak exercise ST segment (Up: upsloping, Flat: flat, Down: downsloping)</li>
+<li><em>HeartDisease</em>: Output class (1: heart disease, 0: Normal)</li>
 </ul>
 <div class="cell">
 <details class="code-fold">
@@ -3654,10 +3654,10 @@ No   Variable         Stats / Values              Freqs (% of Valid)    Graph   
 <p>(Figure 1: Pictorical representation of some of distribution/trends of Heart Disease data set)</p>
 <p>Figure 1 outlines some distribution/trends which are relevant in predicting heart diseases.</p>
 <ul>
-<li><strong>Heart Disease Distribution (Top-Left):</strong> The distribution is appropriately balanced, minimizing the chances of bias in the model.</li>
-<li><strong>Sex Distribution (Top-Right):</strong> The dataset has more male patients than female, which might impact predictions.</li>
-<li><strong>Age Distribution (Bottom-Left):</strong> Most patients fall within the 40-70 years age range, which may reduce model accuracy for younger individuals.</li>
-<li><strong>Cholesterol Distribution (Bottom-Right):</strong> The presence of zero values in cholesterol is unrealistic, indicating the need for data cleaning.</li>
+<li><em>Heart Disease Distribution (Top-Left):</em> The distribution is appropriately balanced, minimizing the chances of bias in the model.</li>
+<li><em>Sex Distribution (Top-Right):</em> The dataset has more male patients than female, which might impact predictions.</li>
+<li><em>Age Distribution (Bottom-Left):</em> Most patients fall within the 40-70 years age range, which may reduce model accuracy for younger individuals.</li>
+<li><em>Cholesterol Distribution (Bottom-Right):</em> The presence of zero values in cholesterol is unrealistic, indicating the need for data cleaning.</li>
 </ul>
 <p><strong><em>Figure 2: Correlation Matrix – Understanding Key Relationships</em></strong></p>
 <div class="cell">
@@ -3952,9 +3952,9 @@ No   Variable         Stats / Values              Freqs (% of Valid)    Graph   
 </div>
 <p>(Figure 4: Confusion Matrix for Random Forest Model)</p>
 <p><strong><em>Hyperparameter Tuning</em></strong></p>
-<p>After achieving an accuracy of 88.4% on the initial random forest model built using default parameters, we used hyperparameter tuning to improve the model further. Tuning the model is a crucial step in machine learning because the default values will not be the most accurate or generalizable (Probst, Wright, &amp; Boulesteix, 2019b). We conducted model enhancement by implementing 5-fold cross-validation in the process of tuning the key parameter mtry, which is the number of variables that are randomly chosen at every split of the tree.</p>
-<p>For the cross-validation, the training data was divided into five sets, where the model was trained on four sets and validated on the remaining part. The cycle was executed for every fold, aggregated performance across folds, and used the Area Under the ROC Curve (AUC) to serve as the main optimization metric. The reason AUC was chosen is due to its accuracy in providing a reliable model discrimination threshold independent measure, especially in a binary classification problem where the class distributions tend to differ (Fawcett, 2006).</p>
-<p>We evaluated mtry parameters from 2 through 5. Based on analysis, we discovered that mtry=3 achieved the greatest mean AUC (0.9302) which suggested that this setting provided the optimal compromise between overfitting and underfitting (Oshiro et al., 2012).</p>
+<p>After achieving an accuracy of 88.4% on the initial random forest model built using default parameters, we used hyperparameter tuning to improve the model further. Tuning the model is a crucial step in machine learning because the default values will not be the most accurate or generalizable [probst2019rfhealth]. We conducted model enhancement by implementing 5-fold cross-validation in the process of tuning the key parameter mtry, which is the number of variables that are randomly chosen at every split of the tree.</p>
+<p>For the cross-validation, the training data was divided into five sets, where the model was trained on four sets and validated on the remaining part. The cycle was executed for every fold, aggregated performance across folds, and used the Area Under the ROC Curve (AUC) to serve as the main optimization metric. The AUC was chosen because it assesses a model’s performance and does not take into account classification thresholds, which matters greatly in binary classification problems with an imbalanced dataset. For instance, Khalilia, Chakraborty and Popescu (2011) applied Random Forests to predict risk of chronic diseases (including heart diseases) on a large, disorderly medical dataset, achieving an average AUC of 88.79%. This illustrates the method’s effectiveness in real world healthcare applications. Though these authors worked with different datasets and broader disease categories, they illustrated the importance of AUC in performance assessment, which proves to be quite useful in medical context. <span class="citation" data-cites="khalilia2011predicting">(<a href="#ref-khalilia2011predicting" role="doc-biblioref">Khalilia, Chakraborty, and Popescu 2011</a>)</span>.</p>
+<p>We evaluated mtry parameters from 2 through 5. Based on analysis, we discovered that mtry=3 achieved the greatest mean AUC (0.9302) which suggested that this setting provided the optimal compromise between overfitting and underfitting <span class="citation" data-cites="oshiro2012many">(<a href="#ref-oshiro2012many" role="doc-biblioref">Oshiro, Perez, and Baranauskas 2012</a>)</span>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -4073,9 +4073,16 @@ No   Variable         Stats / Values              Freqs (% of Valid)    Graph   
 </div>
 </div>
 <p>(Figure 5: Confusion Matrix for Tuned Random Forest Model)</p>
-<p>The confusion matrix indicated for the test dataset that the last model most accurately classified for mtry = 3 and 100 trees. It’s performance on the dataset was as follows:<br><br>
-- Accuracy: 88.34% <br> - Sensitivity (Recall for ‘No’ class): 95.73% <br> - Specificity: 80.19% <br> - Kappa: 0.76 (substantial agreement) <br> - AUC: 0.9371</p>
-<p>These numbers demonstrate that the tuned model not only does well on the training folds but can also be expected to perform well on unseen data. As shown in Figure 1, the ROC curve indicates strong separation between classes, emphasizing a steep rise towards the top left corner which implies high sensitivity and low false positive rate (Saito &amp; Rehmsmeier, 2015).</p>
+<p>The confusion matrix indicated for the test dataset that the last model most accurately classified for mtry = 3 and 100 trees. It’s performance on the dataset was as follows:<br></p>
+<ul>
+<li><p><em>Accuracy</em> = (TP + TN) / (Total) = (111 + 85) / 223 ≈ 88%<br> This represents the proportion of overall correct predictions out of total predictions made.</p></li>
+<li><p><em>Sensitivity</em> (Recall) = TP / (TP + FN) = 85 / (85 + 21) ≈ 94.9%<br> This shows the model’s ability to correctly identify patients with heart disease. A high sensitivity is vital in healthcare applications where failing to detect a condition can have serious consequences.</p></li>
+<li><p><em>Specificity</em> = TN / (TN + FP) = 111 / (111 + 6) ≈ 80.2%<br> This indicates the model’s effectiveness in correctly identifying patients who do not have heart disease.</p></li>
+<li><p><em>Precision</em> = TP / (TP + FP) = 85 / (85 + 6) ≈ 84.1%<br> Precision measures how many of the predicted positive cases were actually positive. High precision reduces the likelihood of false alarms.</p></li>
+<li><p><em>F1 Score</em> = 2 × (Precision × Recall) / (Precision + Recall) = 0.892<br> This is a harmonic mean of precision and recall, especially useful in scenarios with class imbalance.</p></li>
+<li><p><em>Kappa Statistic</em> = 0.756<br> Kappa provides a normalized score that compares the model’s accuracy to what would be expected by chance. A value above 0.75 is generally considered substantial agreement <span class="citation" data-cites="viera2005understanding">(<a href="#ref-viera2005understanding" role="doc-biblioref">Viera and Garrett 2005</a>)</span></p></li>
+</ul>
+<p>These numbers demonstrate that the tuned model not only does well on the training folds but can also be expected to perform well on unseen data. As shown in Figure 1, the ROC curve indicates strong separation between classes, emphasizing a steep rise towards the top left corner which implies high sensitivity and low false positive rate.</p>
 <p>Figure 6 below The tuned random forest model’s ROC curve with an AUC score of 0.9371. This score suggests remarkable classification ability.</p>
 <div class="cell">
 <details class="code-fold">
@@ -4097,8 +4104,8 @@ No   Variable         Stats / Values              Freqs (% of Valid)    Graph   
 </div>
 </div>
 <p>(Figure 6: ROC curve with an AUC score of tuned RF Model)</p>
-<p>The ROC (Receiver Operating Characteristic) curve displays the balance of sensitivity (true positive rate) against specificity (false positive rate) for different thresholds. The provided AUC score of 0.9371 is indicative of the strong power of the model in accurately classifying patients with heart disease from those without it. This shows how hyperparameter tuning can optimize accurately and reliably diagnosing heart disease (Fawcett, 2006).</p>
-<p>We also looked for feature importance, which showed ST_SlopeUp, ChestPainTypeASY, and ST_SlopeFlat to be some of the most important predictors. This is consistent with medical domain knowledge since changes in ST segments and chest pain types are known markers of cardiac abnormality (Khalilia, Chakraborty, &amp; Popescu, 2011). The model’s ability to capture meaningful physiological patterns is also supported by the high ranking of MaxHR and Oldpeak.</p>
+<p>The ROC (Receiver Operating Characteristic) curve displays the balance of sensitivity (true positive rate) against specificity (false positive rate) for different thresholds. The provided AUC score of 0.9371 is indicative of the strong power of the model in accurately classifying patients with heart disease from those without it. This shows how hyperparameter tuning can optimize accurately and reliably diagnosing heart disease.The AUC value, derived from the ROC curve, indicates strong discriminatory ability. An AUC above 0.90 is typically considered excellent<span class="citation" data-cites="fawcett2006introduction">(<a href="#ref-fawcett2006introduction" role="doc-biblioref">Fawcett 2006</a>)</span>. This means the model is highly effective at distinguishing between patients with and without heart disease, regardless of classification threshold.</p>
+<p>We also looked for feature importance, which showed ST_SlopeUp, ChestPainTypeASY, and ST_SlopeFlat to be some of the most important predictors. This is consistent with medical domain knowledge since changes in ST segments and chest pain types are known markers of cardiac abnormality <span class="citation" data-cites="khalilia2011predicting">(<a href="#ref-khalilia2011predicting" role="doc-biblioref">Khalilia, Chakraborty, and Popescu 2011</a>)</span>. The model’s ability to capture meaningful physiological patterns is also supported by the high ranking of MaxHR and Oldpeak.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -4123,7 +4130,7 @@ No   Variable         Stats / Values              Freqs (% of Valid)    Graph   
 </div>
 </div>
 <p>(Figure 7. Feature importance based on the average decrease in Gini index.)</p>
-<p>In an ensemble model such as the random forest, a lack of tuning may still produce acceptable results, however, it will never be fully optimal. For instance, mtry was tuned such that the trees in the forest had the optimal levels of randomness along with the optimal depth of the splits so that the model could generalize to new data without overfitting (Boulestix et al., 2012).</p>
+<p>Predicted outcomes from the tuned random forest model showed highly accurate results across all evaluation metrics. These include a balanced accuracy of 87.96%, sensitivity of 94.9%, and an AUC of 0.9371. It also demonstrates significant clinical relevance. Most importantly, the model reduces the number of false negatives which is crucial for medical diagnostic systems that pose the risk of delayed treatment or other harmful consequences as result of failing to detect a condition<span class="citation" data-cites="khalilia2011predicting">(<a href="#ref-khalilia2011predicting" role="doc-biblioref">Khalilia, Chakraborty, and Popescu 2011</a>)</span></p>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
@@ -4151,6 +4158,9 @@ Breiman, Leo. 2001. <span>“Random Forests.”</span> <em>Machine Learning</em>
 <div id="ref-dai2018using" class="csl-entry" role="listitem">
 Dai, Bin, Rung-Ching Chen, Shun-Zhi Zhu, and Wei-Wei Zhang. 2018. <span>“Using Random Forest Algorithm for Breast Cancer Diagnosis.”</span> In <em>2018 International Symposium on Computer, Consumer and Control (IS3C)</em>, 449–52. IEEE. <a href="https://doi.org/10.1109/IS3C.2018.00119">https://doi.org/10.1109/IS3C.2018.00119</a>.
 </div>
+<div id="ref-fawcett2006introduction" class="csl-entry" role="listitem">
+Fawcett, Tom. 2006. <span>“An Introduction to ROC Analysis.”</span> <em>Pattern Recognition Letters</em> 27 (8): 861–74. <a href="https://doi.org/10.1016/j.patrec.2005.10.010">https://doi.org/10.1016/j.patrec.2005.10.010</a>.
+</div>
 <div id="ref-khalilia2011predicting" class="csl-entry" role="listitem">
 Khalilia, Mohammed, Sounak Chakraborty, and Mihail Popescu. 2011. <span>“Predicting Disease Risks from Highly Imbalanced Data Using Random Forest.”</span> <em>BMC Medical Informatics and Decision Making</em> 11: 1–13. <a href="https://doi.org/10.1186/1472-6947-11-51">https://doi.org/10.1186/1472-6947-11-51</a>.
 </div>
@@ -4171,6 +4181,9 @@ Probst, Philipp, Marvin N Wright, and Anne-Laure Boulesteix. 2019b. <span>“Hyp
 </div>
 <div id="ref-rigatti2017random" class="csl-entry" role="listitem">
 Rigatti, Steven J. 2017. <span>“Random Forest.”</span> <em>Journal of Insurance Medicine</em> 47 (1): 31–39. <a href="https://doi.org/10.17849/insm-47-01-31-39.1">https://doi.org/10.17849/insm-47-01-31-39.1</a>.
+</div>
+<div id="ref-viera2005understanding" class="csl-entry" role="listitem">
+Viera, Anthony J, and Joanne M Garrett. 2005. <span>“Understanding Interobserver Agreement: The Kappa Statistic.”</span> <em>Family Medicine</em> 37 (5): 360–63.
 </div>
 </div></section></div></main>
 <!-- /main column -->
