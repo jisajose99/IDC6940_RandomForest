@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)">
-<meta name="dcterms.date" content="2025-04-06">
+<meta name="dcterms.date" content="2025-04-09">
 
 <title>Random Forest in the Health Industry</title>
 <style>
@@ -3263,7 +3263,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 6, 2025</p>
+      <p class="date">April 9, 2025</p>
     </div>
   </div>
   
@@ -3283,6 +3283,7 @@ window.Quarto = {
 <p>Beyond diagnostics, RF is also instrumental in handling imbalanced datasets. For instance, in predicting disease susceptibility, random subsampling techniques within RF have been shown to outperform other machine learning models such as support vector machines, boosting, and bagging <span class="citation" data-cites="khalilia2011predicting">(<a href="#ref-khalilia2011predicting" role="doc-biblioref">Khalilia, Chakraborty, and Popescu 2011</a>)</span>. Furthermore, RF has been used in healthcare resource planning, such as forecasting the demand for essential medications in public health facilities to ensure supply chain efficiency and prevent shortages <span class="citation" data-cites="mbonyinshuti2022demand">(<a href="#ref-mbonyinshuti2022demand" role="doc-biblioref">Mbonyinshuti, Nshimiyimana, and Uwitonze 2022</a>)</span>.</p>
 <p>RF is a powerful algorithm, but it also has its challenges. Hyperparameter tuning is crucial for maximizing predictive accuracy, with factors such as the number of trees (L), sample size per tree, and the number of variables considered at each split (mtry) all significantly influencing model performance <span class="citation" data-cites="probst2019hyperparameters">(<a href="#ref-probst2019hyperparameters" role="doc-biblioref">Probst, Wright, and Boulesteix 2019b</a>)</span>. While RF often performs well with default settings, fine-tuning these parameters can enhance both reliability and speed <span class="citation" data-cites="boulesteix2012overview">(<a href="#ref-boulesteix2012overview" role="doc-biblioref">Boulesteix et al. 2012</a>)</span>. However, the major drawback remains model interpretability, which is critical in medical decision-making. Researchers have proposed methods such as conditional inference forests (CIF) to improve reliability while reducing bias in variable selection <span class="citation" data-cites="dai2018using">(<a href="#ref-dai2018using" role="doc-biblioref">Dai et al. 2018</a>)</span>.</p>
 <p>Since RF was first introduced to clinical diagnostics, it has been regarded as one of the most effective tools in medical prediction models. This study explores its performance compared to traditional statistical techniques and evaluates whether advancements in hyperparameter optimization can further enhance its effectiveness. By synthesizing insights from multiple sources, this analysis provides a comprehensive understanding of RF’s potential in healthcare analytics while identifying areas for further refinement.</p>
+<p>In this study, we use the Random Forest algorithm on a clinical dataset with the goal of predicting heart disease. Our first step involves data exploration and preprocessing, which is later followed by training and evaluating a baseline decision tree model. After this, we create a Random Forest model and fine-tune it with cross-validation. To evaluate our model, we calculate accuracy, precision, recall, F1-score, AUC-ROC, and analyze feature importance to invoke relevance of the clinical reasoning behind the main predictors. With this endeavor, we strive to understand the practicality of exploiting Random Forest in real-world healthcare analytics and decision support systems.</p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
