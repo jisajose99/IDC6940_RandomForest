@@ -444,7 +444,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)">
-  <meta name="dcterms.date" content="2025-04-12">
+  <meta name="dcterms.date" content="2025-04-13">
   <title>RANDOM FOREST ALGORITHM</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1241,10 +1241,11 @@ Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)
 </div>
 </div>
 
-  <p class="date">2025-04-12</p>
+  <p class="date">2025-04-13</p>
 </section>
-<section id="introduction-to-random-forest-algorithm" class="slide level2">
-<h2>Introduction to Random Forest Algorithm</h2>
+<section id="introduction" class="slide level2 smaller">
+<h2>Introduction</h2>
+<p><em>Overview of Random Forest Algorithm</em> <br><br></p>
 <ul>
 <li><strong>Random Forest (RF)</strong> is a widely used ensemble machine learning algorithm built on decision trees.</li>
 <li>It combines two key techniques:
@@ -1254,8 +1255,9 @@ Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)
 </ul></li>
 </ul>
 </section>
-<section id="advantages-limitations-of-random-forest-in-healthcare" class="slide level2 smaller">
-<h2>Advantages &amp; Limitations of Random Forest in Healthcare</h2>
+<section id="pros-cons" class="slide level2 smaller">
+<h2>Pros &amp; Cons</h2>
+<p><em>Overview of the strengths and limitations of using Random Forest for clinical applications</em> <br><br></p>
 <h3 id="advantages-in-healthcare">Advantages in Healthcare:</h3>
 <ul>
 <li>Handles complex, high-dimensional clinical data<br>
@@ -1372,13 +1374,18 @@ Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)
 </section>
 <section id="dataset-overview" class="slide level2 smaller">
 <h2>Dataset Overview</h2>
-<p><strong>Source</strong>: Kaggle – Heart Failure Prediction dataset<br>
-<strong>Total Records</strong>: 918 patient entries, with 11 clinical and demographic features</p>
+<ul>
+<li><strong>Source</strong>: Kaggle – Heart Failure Prediction Dataset<br>
+</li>
+<li><strong>Total Records</strong>: 918 patient entries, with 11 clinical and demographic features</li>
+</ul>
 <h3 id="key-features">Key Features:</h3>
-<p><strong>Demographic / General Clinical Features:</strong><br>
-Age, Sex, RestingBP (Resting Blood Pressure), Cholesterol, MaxHR (Maximum Heart Rate Achieved), FastingBS (Fasting Blood Sugar)</p>
-<p><strong>Cardiac-Specific Clinical Features:</strong><br>
-ChestPainType, RestingECG (Resting Electrocardiogram results), ExerciseAngina (Exercise-induced Angina), Oldpeak (ST Depression), ST_Slope (Slope of ST segment)</p>
+<ul>
+<li><p><strong>Demographic / General Clinical Features:</strong><br>
+Age, Sex, RestingBP (Resting Blood Pressure), Cholesterol, MaxHR (Maximum Heart Rate Achieved), FastingBS (Fasting Blood Sugar)</p></li>
+<li><p><strong>Cardiac-Specific Clinical Features:</strong><br>
+ChestPainType, RestingECG (Resting Electrocardiogram results), ExerciseAngina (Exercise-induced Angina), Oldpeak (ST Depression), ST_Slope (Slope of ST segment)</p></li>
+</ul>
 <h3 id="target-variable">Target Variable:</h3>
 <p>HeartDisease (1 = indicates heart disease, 0 = no heart disease)</p>
 </section>

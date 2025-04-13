@@ -20,7 +20,9 @@ editor:
     wrap: 72
 ---
 
-## Introduction to Random Forest Algorithm
+## Introduction {.smaller}
+_Overview of Random Forest Algorithm_ <br><br>
+
 
 - **Random Forest (RF)** is a widely used ensemble machine learning algorithm built on decision trees.
 - It combines two key techniques:
@@ -28,7 +30,9 @@ editor:
   - **Random feature selection:** Randomly selects features at each split to reduce correlation between trees.
 
 
-## Advantages & Limitations of Random Forest in Healthcare  {.smaller}
+## Pros & Cons  {.smaller}
+_Overview of the strengths and limitations of using Random Forest for clinical applications_ <br><br>
+
 
 ### Advantages in Healthcare:
 - Handles complex, high-dimensional clinical data  
@@ -119,15 +123,15 @@ editor:
 
 ## Dataset Overview {.smaller}
 
-**Source**: Kaggle – Heart Failure Prediction dataset  
-**Total Records**: 918 patient entries, with 11 clinical and demographic features
+- **Source**: Kaggle – Heart Failure Prediction Dataset  
+- **Total Records**: 918 patient entries, with 11 clinical and demographic features
 
 ### Key Features:
 
-**Demographic / General Clinical Features:**  
+- **Demographic / General Clinical Features:**  
 Age, Sex, RestingBP (Resting Blood Pressure), Cholesterol, MaxHR (Maximum Heart Rate Achieved), FastingBS (Fasting Blood Sugar)
 
-**Cardiac-Specific Clinical Features:**  
+- **Cardiac-Specific Clinical Features:**  
 ChestPainType, RestingECG (Resting Electrocardiogram results), ExerciseAngina (Exercise-induced Angina), Oldpeak (ST Depression), ST_Slope (Slope of ST segment)
 
 ### Target Variable:  
