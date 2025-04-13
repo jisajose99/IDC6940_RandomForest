@@ -1,5 +1,5 @@
 ---
-title: "Random Forest Algorithm"
+title: "RANDOM FOREST ALGORITHM"
 subtitle: "An analysis of the random forest algorithm and its applications in the health industry"
 author: "Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)"
 date: '`r Sys.Date()`'
@@ -20,7 +20,7 @@ editor:
     wrap: 72
 ---
 
-## INTRODUCTION TO RANDOM FOREST ALGORITHM 
+## Introduction to Random Forest Algorithm
 
 - **Random Forest (RF)** is a widely used ensemble machine learning algorithm built on decision trees.
 - It combines two key techniques:
@@ -28,7 +28,7 @@ editor:
   - **Random feature selection:** Randomly selects features at each split to reduce correlation between trees.
 
 
-## ADVANTAGES & LIMITATIONS OF RANDOM FOREST IN HEALTHCARE  {.smaller}
+## Advantages & Limitations of Random Forest in Healthcare  {.smaller}
 
 ### Advantages in Healthcare:
 - Handles complex, high-dimensional clinical data  
@@ -43,14 +43,14 @@ editor:
 - Performance may plateau with excessive tuning  
 
 
-## REAL-WORLD APPLICATIONS  
+## Real World Applications
 
 - Colon cancer survival analysis using SEER data  
 - ICU outcome prediction and sepsis risk classification  
 - Diabetes detection and prevention 
 - Medication demand forecasting 
 
-## STUDY OBJECTIVE  {.smaller}
+## Study Objective {.smaller}
 
 - Predict heart disease using Random Forest and structured clinical data  
 - Compare baseline model with tuned Random Forest model  
@@ -63,7 +63,7 @@ editor:
   - AUC-ROC (Area under the Receiver Operating Characteristic curve)  
 
 
-## METHOD OVERVIEW  {.smaller}
+## Method Overview {.smaller}
 - Built Random Forest using the `caret` package in R  
 - Split data into 70% training, 30% testing using `createDataPartition()`  
 - Trained 100 decision trees using the `randomForest` function  
@@ -79,7 +79,7 @@ editor:
 
 
 
-##  HYPERPARAMETER TUNING EXPLANATION {.smaller}
+##  Hyperparameter Tuning Explanation {.smaller}
 
 - Hyperparameters are adjustable settings that influence how the model learns from data
 
@@ -95,7 +95,7 @@ editor:
 
 
 
-## EVALUATION METRICS  {.smaller}
+## Evaluation Metrics  {.smaller}
 
 
 - **Accuracy**: Measures overall correctness of the model.  
@@ -117,7 +117,7 @@ editor:
 
 (TP = True Positive, TN = True Negative, FP = False Positive, FN = False Negative)
 
-## DATASET OVERVIEW {.smaller}
+## Dataset Overview {.smaller}
 
 **Source**: Kaggle – Heart Failure Prediction dataset  
 **Total Records**: 918 patient entries, with 11 clinical and demographic features
@@ -170,7 +170,7 @@ kable(structure_table, caption = "Data Structure Overview")
 
 ```
 
-## KEY INSIGHTS AND OBSERVATIONS  {.smaller}
+## Key Insights & Observations   {.smaller}
 
 - **Data Quality:**
   - No missing or duplicate records  
