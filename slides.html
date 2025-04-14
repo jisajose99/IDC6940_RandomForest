@@ -444,7 +444,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)">
-  <meta name="dcterms.date" content="2025-04-13">
+  <meta name="dcterms.date" content="2025-04-14">
   <title>RANDOM FOREST ALGORITHM</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1241,7 +1241,7 @@ Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)
 </div>
 </div>
 
-  <p class="date">2025-04-13</p>
+  <p class="date">2025-04-14</p>
 </section>
 <section id="introduction" class="slide level2 smaller">
 <h2>Introduction</h2>
@@ -1311,24 +1311,19 @@ Maddie Sortino and Jisa Jose (Advisor: Dr. Cohen)
 <section id="method-overview" class="slide level2 smaller">
 <h2>Method Overview</h2>
 <ul>
-<li><p>Built Random Forest using the <code>caret</code> package in R<br>
-</p></li>
-<li><p>Split data into 70% training, 30% testing using <code>createDataPartition()</code><br>
-</p></li>
-<li><p>Trained 100 decision trees using the <code>randomForest</code> function<br>
-</p></li>
-<li><p>Used bootstrapping (bagging) and random feature selection (<code>mtry</code>) at each split<br>
-</p></li>
-<li><p>Evaluated splits based on Gini impurity<br>
-</p></li>
-<li><p>Combined tree predictions via majority voting (classification)</p></li>
-<li><p>Hyperparameter tuning:</p>
+<li><strong>Step 1: Single Decision Tree (Baseline)</strong>
 <ul>
-<li>Used 5-fold cross-validation (<code>trainControl</code>)<br>
+<li>Built a simple decision tree to establish a baseline and gain initial insights into the data</li>
+</ul></li>
+<li><strong>Step 2: Random Forest Model</strong>
+<ul>
+<li>Improved predictions using a Random Forest with 100 decision trees</li>
+</ul></li>
+<li><strong>Step 3: Hyperparameter Tuning</strong>
+<ul>
+<li>Optimized model performance using 5-fold cross-validation<br>
 </li>
-<li>ROC AUC as the optimization metric<br>
-</li>
-<li><code>expand.grid(mtry = c(2, 3, 4, 5))</code> for tuning number of features per split</li>
+<li>Tuned the <code>mtry</code> parameter (number of features considered at each split)</li>
 </ul></li>
 </ul>
 </section>
