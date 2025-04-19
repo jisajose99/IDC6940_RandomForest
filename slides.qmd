@@ -49,10 +49,10 @@ _Overview of the strengths and limitations of using Random Forest for clinical a
 
 ## Real World Applications
 
-- Colon cancer survival analysis using SEER data  
-- ICU outcome prediction and sepsis risk classification  
-- Diabetes detection and prevention 
-- Medication demand forecasting 
+- Colon cancer survival analysis using SEER data [@rigatti2017random]  
+- ICU outcome prediction and sepsis risk classification [@probst2019rfhealth]  
+- Diabetes detection and prevention [@khine2022diabetes]  
+- Medication demand forecasting [@mbonyinshuti2022demand]
 
 ## Study Objective {.smaller}
 
